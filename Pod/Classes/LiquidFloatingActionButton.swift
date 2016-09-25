@@ -110,7 +110,7 @@ open class LiquidFloatingActionButton : UIView {
 
     // open all cells
     open func open() {
-        
+        baseView.openDuration = animationDuration / (dataSource.numberOfCells as CFTimeInterval)
         // rotate plus icon
         CATransaction.setAnimationDuration(animationDuration)
         self.plusLayer.transform = CATransform3DMakeRotation((CGFloat(M_PI) * rotationDegrees) / 180, 0, 0, 1)
