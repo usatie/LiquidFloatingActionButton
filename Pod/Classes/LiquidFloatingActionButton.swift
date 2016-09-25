@@ -110,8 +110,10 @@ open class LiquidFloatingActionButton : UIView {
 
     // open all cells
     open func open() {
-        baseView.openDuration = animationDuration / (dataSource.numberOfCells as CFTimeInterval)
-        // rotate plus icon
+        if let source = dataSource {
+            baseView.openDuration = CGFloat(animationDuration)
+            baseView.closeDuration = CGFloat(animationDuration)
+        }        // rotate plus icon
         CATransaction.setAnimationDuration(animationDuration)
         self.plusLayer.transform = CATransform3DMakeRotation((CGFloat(M_PI) * rotationDegrees) / 180, 0, 0, 1)
 
@@ -294,9 +296,9 @@ class CircleLiquidBaseView : ActionBarBaseView {
         self.center = actionButton.center.minus(actionButton.frame.origin)
         self.animateStyle = actionButton.animateStyle
         let radius = min(self.frame.width, self.frame.height) * 0.5
-        self.engine = SimpleCircleLiquidEngine(radiusThresh: radius * 0.73, angleThresh: 0.45)
+        self.engine = SimpleCircleLiquidEngine(radiusThresh: radius * 0.73, angleThresh: 1)
         engine?.viscosity = viscosity
-        self.bigEngine = SimpleCircleLiquidEngine(radiusThresh: radius, angleThresh: 0.55)
+        self.bigEngine = SimpleCircleLiquidEngine(radiusThresh: radius, angleThresh: 1)
         bigEngine?.viscosity = viscosity
         self.engine?.color = actionButton.color
         self.bigEngine?.color = actionButton.color
@@ -384,7 +386,7 @@ class CircleLiquidBaseView : ActionBarBaseView {
     }
     
     func updateOpen() {
-        update(0.1, duration: openDuration) { cell, i, ratio in
+        update(0, duration: openDuration) { cell, i, ratio in
             let posRatio = ratio > CGFloat(i) / CGFloat(self.openingCells.count) ? ratio : 0
             let distance = (cell.frame.height * 0.5 + CGFloat(i + 1) * cell.frame.height * 1.5) * posRatio
             cell.center = self.center.plus(self.differencePoint(distance))
