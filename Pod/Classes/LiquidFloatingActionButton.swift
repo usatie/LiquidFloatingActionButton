@@ -46,7 +46,7 @@ open class LiquidFloatingActionButton : UIView {
     open weak var delegate:   LiquidFloatingActionButtonDelegate?
     open weak var dataSource: LiquidFloatingActionButtonDataSource?
 
-    open var animationDuration:CGFloat = 0.2
+    open var animationDuration:CFTimeInterval = 0.2
     open var responsible = true
     open var isOpening: Bool  {
         get {
