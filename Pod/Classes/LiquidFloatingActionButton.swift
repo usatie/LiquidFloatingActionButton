@@ -46,6 +46,7 @@ open class LiquidFloatingActionButton : UIView {
     open weak var delegate:   LiquidFloatingActionButtonDelegate?
     open weak var dataSource: LiquidFloatingActionButtonDataSource?
 
+    open var animationDuration:CGFloat = 0.2
     open var responsible = true
     open var isOpening: Bool  {
         get {
@@ -111,7 +112,7 @@ open class LiquidFloatingActionButton : UIView {
     open func open() {
         
         // rotate plus icon
-        CATransaction.setAnimationDuration(0.8)
+        CATransaction.setAnimationDuration(animationDuration)
         self.plusLayer.transform = CATransform3DMakeRotation((CGFloat(M_PI) * rotationDegrees) / 180, 0, 0, 1)
 
         let cells = cellArray()
@@ -128,7 +129,7 @@ open class LiquidFloatingActionButton : UIView {
     open func close() {
         
         // rotate plus icon
-        CATransaction.setAnimationDuration(0.8)
+        CATransaction.setAnimationDuration(animationDuration)
         self.plusLayer.transform = CATransform3DMakeRotation(0, 0, 0, 1)
     
         self.baseView.close(cellArray())
